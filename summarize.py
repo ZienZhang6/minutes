@@ -3,7 +3,7 @@ from langchain.chains import LLMChain
 from langchain_core.prompts import PromptTemplate
 import json
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from langchain.chains.summarize import load_summarize_chain
 from langchain_community.document_loaders import BiliBiliLoader

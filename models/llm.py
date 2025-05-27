@@ -4,7 +4,7 @@ from typing import Any, List, Mapping, Optional
 from transformers import AutoModelForCausalLM, AutoTokenizer, AutoModel, AutoConfig
 from transformers import LlamaForCausalLM, LlamaTokenizer, GenerationConfig
 from langchain.llms.base import LLM
-from langchain_community.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 
 def load_llm(llm_name_or_path):
     if llm_name_or_path is None or 'openai' in llm_name_or_path.lower():
