@@ -1,11 +1,12 @@
 from models.llm import AutoLLM, ChatGLM
-from langchain import LLMChain, PromptTemplate
+from langchain.chains import LLMChain
+from langchain_core.prompts import PromptTemplate
 import json
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.chat_models import ChatOpenAI
-from langchain.docstore.document import Document
+from langchain_openai import ChatOpenAI
+from langchain_core.documents import Document
 from langchain.chains.summarize import load_summarize_chain
-from langchain.document_loaders import BiliBiliLoader
+from langchain_community.document_loaders import BiliBiliLoader
 from typing import List, Dict
 from utils import chunk_strings
 
@@ -90,7 +91,7 @@ if __name__ == '__main__':
     #llm = ChatGLM("/mnt/samsung-t7/yuekai/llm/models/chatglm-6b")
     llm = ChatOpenAI()
 
-    summarization_prompt_template = """用一句话总结下面的会议:\n\n{text}\n\n 要求：1.非常简短。\n2.不要出现“会议”等字眼。\n总结："""
+    summarization_prompt_template = """用一句话总结下面的会议:\n\n{text}\n\n 要求：1.非常简短。\n2.不要出现"会议"等字眼。\n总结："""
     PROMPT = PromptTemplate(template=summarization_prompt_template, input_variables=["text"])
     chain = load_summarize_chain(llm, chain_type="map_reduce", return_intermediate_steps=True, map_prompt=PROMPT, combine_prompt=PROMPT)
 

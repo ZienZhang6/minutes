@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 mkdir -p vad
-wget -nc -P vad https://raw.githubusercontent.com/snakers4/silero-vad/master/files/silero_vad.onnx 
+# wget -nc -P vad https://raw.githubusercontent.com/snakers4/silero-vad/master/files/silero_vad.onnx
+wget -nc -P vad https://github.com/snakers4/silero-vad/raw/v4.0/files/silero_vad.onnx
 
 mkdir -p paraformer
 wget -nc -P paraformer https://huggingface.co/csukuangfj/sherpa-onnx-paraformer-zh-2023-03-28/resolve/main/model.onnx

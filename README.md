@@ -15,6 +15,7 @@
 - （TODO）基于多个长音频，建立向量数据库，支持续写
 
 ## 特点
+
 - 中文识别效果精准，强于 openai 的 whisper large 模型
 - 支持完全私有化部署，[随机播客E114识别结果](media/out.txt)
 
@@ -27,6 +28,9 @@
 bash downloads/download.sh
 # 安装依赖
 pip3 install -r requirements.txt
+
+# 可选：安装 ffmpeg，如果指定的格式为非 wav
+
 # 开始运行
 python3 pipeline.py --wav dowloads/test_audios/e114.mp3
 ```

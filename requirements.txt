@@ -2,3 +2,7 @@ langchain
 sherpa-onnx
 transformers
 soundfile>=0.12
+tiktoken
+torch
+langchain-openai
+langchain-community
