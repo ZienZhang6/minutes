@@ -16,8 +16,10 @@ except FileNotFoundError:
     print("未找到 FFmpeg，请检查安装和 PATH 配置。")
 
 # Convert MP3 to WAV using FFmpeg
-in_filename = r'E:\\learning\\minutes-main\\downloads\\test_audios\\e114.mp3'
-out_filename = r'E:\\learning\\minutes-main\\downloads\\test_audios\\e114.wav'
-_ = os.system(f"ffmpeg -y -i '{in_filename}' -acodec pcm_s16le -ac 1 -ar 16000 '{out_filename}'")
+in_filename = 'E:/learning/minutes/downloads/test_audios/e114.mp3'
+out_filename = 'E:/learning/minutes/downloads/test_audios/e114.wav'
+
+# 终于好用了  win下 ffmpeg的参数路径必须是 双引号包裹的（重要）
+_ = os.system(f'ffmpeg -y -i "{in_filename}" -acodec pcm_s16le -ac 1 -ar 16000 "{out_filename}"')
 
 speech, _ = soundfile.read(out_filename)
