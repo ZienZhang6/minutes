@@ -46,7 +46,7 @@ def get_args():
     parser.add_argument(
         "--wav",
         type=str,
-        default="./downloads/test_audios/e114.mp3",
+        default="E:\learning\minutes-main\downloads\test_audios\e114.mp3",
         help="The input sound file(s) to decode. "
     )
 
@@ -87,29 +87,34 @@ if __name__ == "__main__":
         debug=False,
     )
     vad_model = OnnxWrapper(args.vad)
-    llm = load_llm(args.llm_name_or_path)
+    # llm = load_llm(args.llm_name_or_path)
 
+    ## 转换音频文件并进行语音识别
     print("Started!")
-    wav = convert_to_wav(args.wav)
+    # wav = convert_to_wav(args.wav)
+    out_filename = r'E:\\learning\\minutes-main\\downloads\\test_audios\\1.wav'
+    wav,_ = soundfile.read(out_filename)
 
     results = transcribe_with_vad(recognizer, vad_model, wav)
     print("Transcription finished!")
-    docs, segmenation_indexs = load_from_transcripts(results)
-    summarized_text, chapter_titles = summarize_contents_and_titles(llm, docs, args.summarization_prompt_template, args.title_prompt_template)
+    
+    # ## 加载转录结果并进行内容总结
+    # docs, segmenation_indexs = load_from_transcripts(results)
+    # summarized_text, chapter_titles = summarize_contents_and_titles(llm, docs, args.summarization_prompt_template, args.title_prompt_template)
 
-    assert len(chapter_titles) == len(segmenation_indexs) + 1
-    print("Summarization finished!")
-    print(chapter_titles)
+    # assert len(chapter_titles) == len(segmenation_indexs) + 1
+    # print("Summarization finished!")
+    # print(chapter_titles)
 
-    with open(args.output, "w", encoding='utf-8') as f:
-        f.write(f"{summarized_text[-1]}\n")
-        for i, title in enumerate(chapter_titles[:-1]):
-            idx = segmenation_indexs[i]
-            for data in results:
-                if data['id'] == idx:
-                    f.write(f"{data['start_time']}\t{title}\n")
-                    print(f"{data['start_time']}\t{title}")
-                    break
-        for result in results:
-            f.write(f"{result['start_time']}-->{result['end_time']}\t{result['s']}\n")
+    # with open(args.output, "w", encoding='utf-8') as f:
+    #     f.write(f"{summarized_text[-1]}\n")
+    #     for i, title in enumerate(chapter_titles[:-1]):
+    #         idx = segmenation_indexs[i]
+    #         for data in results:
+    #             if data['id'] == idx:
+    #                 f.write(f"{data['start_time']}\t{title}\n")
+    #                 print(f"{data['start_time']}\t{title}")
+    #                 break
+    #     for result in results:
+    #         f.write(f"{result['start_time']}-->{result['end_time']}\t{result['s']}\n")
 
