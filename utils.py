@@ -2,19 +2,24 @@ import datetime
 from typing import List
 import soundfile
 import os
+from pathlib import Path
 
 def convert_to_wav(in_filename: str) -> str:
     """Convert the input audio file to a wave file"""
-    file_root, _ = os.path.splitext(in_filename)
-    out_filename = file_root + ".wav"
-    # check if out_filename exists
-    if os.path.exists(out_filename):
-        speech, _ = soundfile.read(out_filename)
-        return speech
-    if '.mp3' in in_filename:
-        _ = os.system(f"ffmpeg -y -i '{in_filename}' -acodec pcm_s16le -ac 1 -ar 16000 '{out_filename}'")
-    else:
-        _ = os.system(f"ffmpeg -hide_banner -y -i '{in_filename}' -ar 16000 '{out_filename}'")
+    # 将win路径
+    base_dir = Path(in_filename)
+    # print(base_dir.parent)
+    # print(base_dir.name)
+    # print(base_dir.stem)
+    # print(base_dir.suffix)
+
+    out_filename = base_dir.parent / (base_dir.stem + ".wav")
+
+    try:
+        _ = os.system(f"ffmpeg -y -i '{str(base_dir.parent / base_dir.name)}' -acodec pcm_s16le -ac 1 -ar 16000 '{out_filename}'")
+    except:
+        print(f"Error converting {in_filename} to wav")
+        return None
     speech, _ = soundfile.read(out_filename)
     print(f"load speech shape {speech.shape}")
     return speech
@@ -40,3 +45,9 @@ def chunk_strings(input_list: List[str], output_chunk_length: int) -> List[str]:
         output_list.append(current_chunk)
     
     return output_list, chunk_idx
+
+
+if __name__ == '__main__':
+    in_filename = r'E:\learning\minutes-main\downloads\test_audios\e114.mp3'
+
+    speech = convert_to_wav(in_filename)
