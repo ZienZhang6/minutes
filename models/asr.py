@@ -104,7 +104,7 @@ def process_time(milliseconds):
     # time_hms = "{:02d}:{:02d}:{:02d}:{:03d}".format(int(time_parts[0]), int(time_parts[1]), int(time_parts[2]), int(str(milliseconds)[-3:]))
     return time_hms
 
-def transcribe_with_vad(recognizer, vad_model, wav: np.ndarray, sample_rate: int = 16000):
+def transcribe_with_vad(recognizer, vad_model, wav: np.ndarray, sample_rate: int = 16000, output_file: str = 'results.txt'):
     timestamps = get_speech_timestamps(wav, vad_model)
     results_list = []
     for idx, timestamp in enumerate(timestamps):
@@ -123,7 +123,7 @@ def transcribe_with_vad(recognizer, vad_model, wav: np.ndarray, sample_rate: int
         results_list.append(timestamp)
 
                 # 写入 TXT 文件
-        with open('results.txt', 'w', encoding='utf-8') as f:
+        with open(output_file, 'w', encoding='utf-8') as f:
             for item in results_list:
                 f.write(f"ID: {item['id']}\n")
                 f.write(f"开始时间: {item['start_time']}\n")
