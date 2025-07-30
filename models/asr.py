@@ -121,6 +121,16 @@ def transcribe_with_vad(recognizer, vad_model, wav: np.ndarray, sample_rate: int
         timestamp['start_time'] = process_time(int(timestamp['start']/sample_rate*1000))
         timestamp['end_time'] = process_time(int(timestamp['end']/sample_rate*1000))
         results_list.append(timestamp)
+
+                # 写入 TXT 文件
+        with open('results.txt', 'w', encoding='utf-8') as f:
+            for item in results_list:
+                f.write(f"ID: {item['id']}\n")
+                f.write(f"开始时间: {item['start_time']}\n")
+                f.write(f"结束时间: {item['end_time']}\n")
+                f.write(f"内容: {item['s']}\n")
+                f.write("-" * 50 + "\n")
+                
         print(timestamp)
     return results_list
 
